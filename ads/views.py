@@ -44,6 +44,12 @@ class AdDetailView(DetailView):
     template_name = 'ads/ad_detail.html'
     context_object_name = 'ad'
 
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        obj.views_count += 1
+        obj.save(update_fields=['views_count'])
+        return obj
+
 
 class AdCreateView(LoginRequiredMixin, CreateView):
     model = Ad

@@ -10,6 +10,7 @@
             Категория: {{ ad.category.name }} | 
             Автор: {{ ad.author.username }} | 
             Опубликовано: {{ ad.created_at|date:"d.m.Y H:i" }}
+            Просмотров: {{ ad.views_count }}
         </p>
         
         {% if ad.image %}

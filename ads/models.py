@@ -45,6 +45,7 @@ class Ad(models.Model):
         verbose_name='Автор'
     )
     is_active = models.BooleanField(default=True, verbose_name='Активно')
+    views_count = models.PositiveIntegerField(default=0, verbose_name='Просмотры')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
 
