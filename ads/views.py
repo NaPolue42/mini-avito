@@ -1,4 +1,5 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views import View
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import UserCreationForm
@@ -112,3 +113,21 @@ class RegisterView(FormView):
         form.save()
         messages.success(self.request, 'Регистрация успешна! Теперь войдите.')
         return super().form_valid(form)
+
+from django.views import View
+from django.http import HttpResponseRedirect
+
+class AdToggleActiveView(LoginRequiredMixin, UserPassesTestMixin, View):
+    def test_func(self):
+        ad = Ad.objects.get(pk=self.kwargs['pk'])
+        return ad.author == self.request.user
+    
+    def post(self, request, pk):
+        ad = Ad.objects.get(pk=pk)
+        ad.is_active = not ad.is_active
+        ad.save(update_fields=['is_active'])
+        if ad.is_active:
+            messages.success(request, 'Объявление снова активно!')
+        else:
+            messages.success(request, 'Объявление снято с публикации.')
+        return HttpResponseRedirect(reverse_lazy('ad_detail', kwargs={'pk': pk}))        

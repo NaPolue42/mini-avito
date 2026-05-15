@@ -10,6 +10,7 @@ urlpatterns = [
     path('ad/<int:pk>/edit/', views.AdUpdateView.as_view(), name='ad_edit'),
     path('ad/<int:pk>/delete/', views.AdDeleteView.as_view(), name='ad_delete'),
     path('my-ads/', views.MyAdsView.as_view(), name='my_ads'),
+    path('ad/<int:pk>/toggle/', views.AdToggleActiveView.as_view(), name='ad_toggle'),
     
     # Аутентификация
     path('login/', auth_views.LoginView.as_view(template_name='auth/login.html'), name='login'),
